@@ -18,8 +18,11 @@ class Route
   # use pattern to pull out route params (save for later?)
   # instantiate controller and call controller action
   def run(req, res)
-    if matches?(req) && (req.request_method == @http_method)
-      controller = @controller_class.new
+    # byebug
+    # p matches?(req) && (req.request_method == @http_method)
+    # p (req.request_method == @http_method)
+    if matches?(req) && (req.request_method.downcase.to_sym == @http_method)
+      controller = @controller_class.new(req,res, {})
       controller.invoke_action(@action_name)
     end
   end
